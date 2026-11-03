@@ -1,0 +1,386 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Applicants Dashboard | JobNest</title>
+  <link rel="stylesheet" href="/output.css">
+</head>
+
+<body class="min-h-screen bg-slate-950 text-slate-100">
+
+  <%- include("../partials/navbar") %>
+
+  <main class="min-h-screen bg-slate-950 px-4 py-10">
+    <div class="mx-auto max-w-6xl">
+
+      <!-- Page Header -->
+      <div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+        <div>
+          <h1 class="text-3xl font-bold text-white">
+            Applicants Dashboard
+          </h1>
+          <p class="mt-2 text-slate-400">
+            Review and manage candidates who applied to your jobs.
+          </p>
+        </div>
+
+        <a
+          href="/employer/dashboard"
+          class="inline-flex items-center justify-center rounded-xl border border-slate-700 bg-slate-900 px-5 py-3 font-semibold text-slate-200 transition hover:border-indigo-500 hover:bg-slate-800"
+        >
+          Back to Dashboard
+        </a>
+      </div>
+
+      <% if (applications.length === 0) { %>
+
+        <!-- Empty State -->
+        <div class="mt-8 rounded-2xl border border-slate-800 bg-slate-900 p-10 text-center">
+          <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-indigo-500/10 text-indigo-400">
+            <span class="text-2xl">👥</span>
+          </div>
+
+          <h2 class="mt-4 text-xl font-semibold text-white">
+            No applications yet
+          </h2>
+
+          <p class="mt-2 text-slate-400">
+            Applications for your posted jobs will appear here.
+          </p>
+        </div>
+
+      <% } else { %>
+
+        <div class="mt-8 space-y-5">
+
+          <% applications.forEach((application) => { %>
+
+            <!-- Applicant Card -->
+            <div class="rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-lg shadow-black/10 transition hover:border-slate-700 sm:p-6">
+
+              <div class="flex flex-col justify-between gap-5 sm:flex-row">
+
+                <!-- Applicant Information -->
+                <div class="min-w-0 flex-1">
+
+                  <h2 class="text-xl font-bold text-white">
+                    <%= application.applicant?.fullName || "Unknown Applicant" %>
+                  </h2>
+
+                  <p class="mt-1 break-all text-slate-400">
+                    <%= application.applicant?.email || "Email unavailable" %>
+                  </p>
+
+                  <!-- Resume -->
+                  <% if (application.applicant?.resume?.filename) { %>
+                    <a
+                      href="/employer/applications/<%= application._id %>/resume"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="mt-3 inline-flex items-center gap-2 rounded-xl border border-indigo-500/30 bg-indigo-500/10 px-4 py-2.5 text-sm font-semibold text-indigo-300 transition hover:bg-indigo-500/20"
+                    >
+                      📄 View Resume ↗
+                    </a>
+                  <% } else { %>
+                    <p class="mt-3 text-sm text-slate-500">
+                      No resume uploaded by this applicant.
+                    </p>
+                  <% } %>
+
+                  <p class="mt-4 font-semibold text-indigo-300">
+                    <%= application.job?.title || "Job no longer available" %>
+                  </p>
+
+                  <p class="mt-1 text-sm text-slate-400">
+                    Company:
+                    <%= application.job?.companyName || "N/A" %>
+                  </p>
+
+                  <p class="mt-2 text-sm text-slate-500">
+                    Applied on:
+                    <%= new Date(application.createdAt).toLocaleDateString("en-IN") %>
+                  </p>
+                </div>
+
+                <!-- Application Status -->
+                <div class="sm:text-right">
+                  <% if (application.status === "Hired") { %>
+
+                    <span class="inline-flex rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-300">
+                      ✓ Hired
+                    </span>
+
+                  <% } else if (application.status === "Shortlisted") { %>
+
+                    <span class="inline-flex rounded-full border border-teal-500/30 bg-teal-500/10 px-4 py-2 text-sm font-semibold text-teal-300">
+                      Shortlisted
+                    </span>
+
+                  <% } else if (application.status === "Rejected") { %>
+
+                    <span class="inline-flex rounded-full border border-red-500/30 bg-red-500/10 px-4 py-2 text-sm font-semibold text-red-300">
+                      Rejected
+                    </span>
+
+                  <% } else { %>
+
+                    <span class="inline-flex rounded-full border border-indigo-500/30 bg-indigo-500/10 px-4 py-2 text-sm font-semibold text-indigo-300">
+                      Applied
+                    </span>
+
+                  <% } %>
+                </div>
+
+              </div>
+
+              <!-- Existing Actions -->
+              <% if (["Applied", "Shortlisted"].includes(application.status)) { %>
+
+                <div class="mt-6 flex flex-wrap gap-3 border-t border-slate-800 pt-5">
+
+                  <% if (application.status !== "Shortlisted") { %>
+                    <form
+                      action="/employer/applications/<%= application._id %>/status"
+                      method="POST"
+                    >
+                      <input
+                        type="hidden"
+                        name="status"
+                        value="Shortlisted"
+                      >
+
+                      <button
+                        type="submit"
+                        class="rounded-xl bg-emerald-600 px-5 py-2.5 font-semibold text-white transition hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-400"
+                      >
+                        ✓ Shortlist
+                      </button>
+                    </form>
+                  <% } %>
+
+                  <form
+                    action="/employer/applications/<%= application._id %>/status"
+                    method="POST"
+                  >
+                    <input
+                      type="hidden"
+                      name="status"
+                      value="Rejected"
+                    >
+
+                    <button
+                      type="submit"
+                      class="rounded-xl border border-red-500/40 bg-red-500/5 px-5 py-2.5 font-semibold text-red-300 transition hover:bg-red-500/15 focus:outline-none focus:ring-2 focus:ring-red-400"
+                    >
+                      ✕ Reject
+                    </button>
+                  </form>
+
+                </div>
+
+                <!-- Hire Candidate Form: separate from the other forms -->
+                <details class="mt-5 overflow-hidden rounded-2xl border border-indigo-500/30 bg-slate-950">
+
+                  <summary class="flex cursor-pointer list-none items-center justify-between gap-3 bg-indigo-600 px-5 py-4 font-semibold text-white transition hover:bg-indigo-500">
+                    <span>✦ Hire Candidate</span>
+                    <span class="text-sm text-indigo-100">Add joining details ▾</span>
+                  </summary>
+
+                  <div class="p-5 sm:p-6">
+
+                    <p class="mb-5 text-sm leading-6 text-slate-400">
+                      Confirm the joining date, reporting time and other details before hiring this candidate.
+                    </p>
+
+                    <form
+                      action="/employer/applications/<%= application._id %>/hire"
+                      method="POST"
+                      class="space-y-5"
+                    >
+
+                      <!-- Two-column responsive layout -->
+                      <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+
+                        <div>
+                          <label class="mb-2 block text-sm font-medium text-slate-200">
+                            Joining Date <span class="text-red-400">*</span>
+                          </label>
+
+                          <input
+                            type="date"
+                            name="joiningDate"
+                            required
+                            class="w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-slate-100 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+                          >
+                        </div>
+
+                        <div>
+                          <label class="mb-2 block text-sm font-medium text-slate-200">
+                            Reporting Time <span class="text-red-400">*</span>
+                          </label>
+
+                          <input
+                            type="time"
+                            name="reportingTime"
+                            required
+                            class="w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-slate-100 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+                          >
+                        </div>
+
+                        <div class="sm:col-span-2">
+                          <label class="mb-2 block text-sm font-medium text-slate-200">
+                            Joining Location / Office Address
+                            <span class="text-red-400">*</span>
+                          </label>
+
+                          <input
+                            type="text"
+                            name="joiningLocation"
+                            required
+                            maxlength="300"
+                            placeholder="Office address or remote joining instructions"
+                            class="w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-slate-100 placeholder:text-slate-500 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+                          >
+                        </div>
+
+                        <div>
+                          <label class="mb-2 block text-sm font-medium text-slate-200">
+                            Salary / Package
+                          </label>
+
+                          <input
+                            type="text"
+                            name="salary"
+                            maxlength="100"
+                            placeholder="e.g. ₹25,000/month"
+                            class="w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-slate-100 placeholder:text-slate-500 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+                          >
+                        </div>
+
+                        <div>
+                          <label class="mb-2 block text-sm font-medium text-slate-200">
+                            HR / Contact Person
+                          </label>
+
+                          <input
+                            type="text"
+                            name="contactPerson"
+                            maxlength="150"
+                            placeholder="Name and contact details"
+                            class="w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-slate-100 placeholder:text-slate-500 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+                          >
+                        </div>
+
+                        <div class="sm:col-span-2">
+                          <label class="mb-2 block text-sm font-medium text-slate-200">
+                            Additional Joining Instructions
+                          </label>
+
+                          <textarea
+                            name="instructions"
+                            rows="4"
+                            maxlength="2000"
+                            placeholder="Documents to bring, reporting instructions, or other important details..."
+                            class="w-full resize-y rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-slate-100 placeholder:text-slate-500 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+                          ></textarea>
+                        </div>
+
+                      </div>
+
+                      <div class="flex flex-col gap-3 border-t border-slate-800 pt-5 sm:flex-row sm:items-center sm:justify-between">
+
+                        <p class="text-xs leading-5 text-slate-500">
+                          Required fields are marked with *.
+                        </p>
+
+                        <button
+                          type="submit"
+                          onclick="return confirm('Are you sure you want to hire this candidate? Please verify the joining details.')"
+                          class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-6 py-3 font-semibold text-white shadow-lg shadow-indigo-950/30 transition hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-slate-950 sm:w-auto"
+                        >
+                          ✓ Confirm Hiring
+                        </button>
+
+                      </div>
+
+                    </form>
+                  </div>
+                </details>
+
+              <% } else if (application.status === "Hired" && application.hiringDetails) { %>
+
+                <!-- Saved hiring details -->
+                <div class="mt-6 rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-5">
+
+                  <h3 class="font-semibold text-emerald-300">
+                    Hiring Details Saved
+                  </h3>
+
+                  <div class="mt-4 grid grid-cols-1 gap-4 text-sm sm:grid-cols-2">
+
+                    <div>
+                      <p class="text-slate-500">Joining Date</p>
+                      <p class="mt-1 text-slate-200">
+                        <%= application.hiringDetails.joiningDate
+                          ? new Date(application.hiringDetails.joiningDate).toLocaleDateString("en-IN")
+                          : "Not provided" %>
+                      </p>
+                    </div>
+
+                    <div>
+                      <p class="text-slate-500">Reporting Time</p>
+                      <p class="mt-1 text-slate-200">
+                        <%= application.hiringDetails.reportingTime || "Not provided" %>
+                      </p>
+                    </div>
+
+                    <div>
+                      <p class="text-slate-500">Joining Location</p>
+                      <p class="mt-1 break-all text-slate-200">
+                        <%= application.hiringDetails.joiningLocation || "Not provided" %>
+                      </p>
+                    </div>
+
+                    <div>
+                      <p class="text-slate-500">Salary / Package</p>
+                      <p class="mt-1 text-slate-200">
+                        <%= application.hiringDetails.salary || "Not specified" %>
+                      </p>
+                    </div>
+
+                    <div>
+                      <p class="text-slate-500">HR / Contact Person</p>
+                      <p class="mt-1 break-all text-slate-200">
+                        <%= application.hiringDetails.contactPerson || "Not provided" %>
+                      </p>
+                    </div>
+
+                    <% if (application.hiringDetails.instructions) { %>
+                      <div class="sm:col-span-2">
+                        <p class="text-slate-500">Additional Instructions</p>
+                        <p class="mt-1 whitespace-pre-line break-all text-slate-200"><%= application.hiringDetails.instructions %></p>
+                      </div>
+                    <% } %>
+
+                  </div>
+                </div>
+
+              <% } %>
+
+            </div>
+
+          <% }) %>
+
+        </div>
+
+      <% } %>
+
+    </div>
+  </main>
+
+  <%- include("../partials/footer") %>
+
+</body>
+</html>

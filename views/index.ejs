@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1120">
+  <meta name="description" content="Discover jobs and internships, explore companies and find your next opportunity with JobNest.">
+  <title>JobNest — Find Work That Moves You Forward</title>
+  <link rel="stylesheet" href="/output.css">
+</head>
+
+<body class="min-h-screen bg-white text-slate-900 antialiased">
+
+  <%- include("partials/navbar") %>
+
+  <main>
+    <!-- Hero -->
+    <section class="relative isolate overflow-hidden bg-[#f7f8ff]">
+      <div class="pointer-events-none absolute -left-40 top-10 -z-10 size-96 rounded-full bg-violet-200/40 blur-3xl"></div>
+      <div class="pointer-events-none absolute -right-32 top-0 -z-10 size-96 rounded-full bg-indigo-200/50 blur-3xl"></div>
+
+      <div class="mx-auto grid max-w-7xl items-center gap-12 px-5 py-16 sm:px-8 sm:py-20 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14 lg:py-28">
+
+        <!-- Hero content -->
+        <div>
+          <div class="inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-white/90 px-4 py-2 text-sm font-semibold text-indigo-700 shadow-sm">
+            <span class="size-2 rounded-full bg-emerald-500"></span>
+            Your next chapter starts here
+          </div>
+
+          <h1 class="mt-7 max-w-2xl text-4xl font-extrabold leading-[1.12] tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
+            Find work that
+            <span class="text-indigo-600">moves you forward.</span>
+          </h1>
+
+          <p class="mt-6 max-w-xl text-base leading-8 text-slate-600 sm:text-lg">
+            Discover meaningful jobs, explore exciting internships and connect your skills with opportunities that match your ambition.
+          </p>
+
+          <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+            <a href="/jobs" class="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-indigo-600/20 transition hover:-translate-y-0.5 hover:bg-indigo-700">
+              Explore opportunities
+              <span aria-hidden="true">→</span>
+            </a>
+
+            <% if (!currentUser) { %>
+              <a href="/signup" class="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-6 py-3.5 text-sm font-bold text-slate-700 transition hover:border-indigo-200 hover:bg-indigo-50">
+                Create an account
+              </a>
+            <% } %>
+          </div>
+
+          <div class="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-slate-600">
+            <span class="inline-flex items-center gap-2">
+              <span class="flex size-5 items-center justify-center rounded-full bg-emerald-100 text-xs font-bold text-emerald-700">✓</span>
+              Explore opportunities
+            </span>
+
+            <span class="inline-flex items-center gap-2">
+              <span class="flex size-5 items-center justify-center rounded-full bg-emerald-100 text-xs font-bold text-emerald-700">✓</span>
+              Build your career
+            </span>
+          </div>
+        </div>
+
+        <!-- Premium JobNest Discover box -->
+        <div class="relative mx-auto w-full max-w-xl lg:ml-auto">
+
+          <div class="pointer-events-none absolute -right-8 -top-8 h-40 w-40 rounded-full bg-violet-300/40 blur-3xl"></div>
+          <div class="pointer-events-none absolute -bottom-8 -left-8 h-40 w-40 rounded-full bg-indigo-300/40 blur-3xl"></div>
+
+          <div class="relative overflow-hidden rounded-3xl border border-white/80 bg-white p-5 shadow-2xl shadow-indigo-950/10 sm:p-7">
+
+            <div class="absolute inset-x-0 top-0 h-1 bg-linear-to-r from-indigo-500 via-violet-500 to-blue-500"></div>
+
+            <!-- Discover header -->
+            <div class="flex items-start justify-between gap-4 border-b border-slate-100 pb-5">
+              <div>
+                <div class="inline-flex items-center gap-2 rounded-full bg-indigo-50 px-3 py-1.5 text-xs font-extrabold uppercase tracking-widest text-indigo-700">
+                  <span class="size-1.5 rounded-full bg-emerald-500"></span>
+                  JobNest opportunities
+                </div>
+
+                <h2 class="mt-3 text-xl font-extrabold tracking-tight text-slate-950 sm:text-2xl">
+                  A better move starts here.
+                </h2>
+
+                <p class="mt-1.5 text-sm leading-6 text-slate-500">
+                  A preview of the opportunities waiting for you.
+                </p>
+              </div>
+
+              <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-indigo-600 text-lg font-black text-white shadow-lg shadow-indigo-600/25">
+                J<span class="text-indigo-200">.</span>
+              </div>
+            </div>
+
+            <div class="mt-5 flex items-center justify-between gap-3">
+              <p class="text-sm font-bold text-slate-800">Featured career paths</p>
+              <span class="rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700">
+                Explore roles
+              </span>
+            </div>
+
+            <!-- Development -->
+            <div class="mt-3 space-y-3">
+
+              <a href="/jobs?category=development" class="group flex items-start gap-3 rounded-2xl border border-slate-200 bg-white p-4 transition hover:border-indigo-200 hover:bg-indigo-50/40 hover:shadow-md">
+                <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-indigo-50 text-indigo-700 transition group-hover:bg-indigo-600 group-hover:text-white">
+                  <svg aria-hidden="true" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 5l-4 14"/>
+                  </svg>
+                </span>
+
+                <span class="min-w-0 flex-1">
+                  <span class="block wrap-break-word font-bold text-slate-900 group-hover:text-indigo-700">Software &amp; Development</span>
+                  <span class="mt-1 block text-sm text-slate-500">Build products. Solve real problems.</span>
+                  <span class="mt-3 flex flex-wrap gap-2">
+                    <span class="rounded-md bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-600">Web</span>
+                    <span class="rounded-md bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-600">Engineering</span>
+                  </span>
+                </span>
+
+                <span class="mt-1 text-lg font-semibold text-slate-300 transition group-hover:text-indigo-600">→</span>
+              </a>
+
+              <!-- Design -->
+              <a href="/jobs?category=design" class="group flex items-start gap-3 rounded-2xl border border-slate-200 bg-white p-4 transition hover:border-violet-200 hover:bg-violet-50/40 hover:shadow-md">
+                <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-violet-50 text-violet-700 transition group-hover:bg-violet-600 group-hover:text-white">
+                  <svg aria-hidden="true" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M12 3 14.5 9.5 21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3Z"/>
+                  </svg>
+                </span>
+
+                <span class="min-w-0 flex-1">
+                  <span class="block wrap-break-wordfont-bold text-slate-900 group-hover:text-violet-700">Design &amp; Creative</span>
+                  <span class="mt-1 block text-sm text-slate-500">Turn thoughtful ideas into experiences.</span>
+                  <span class="mt-3 flex flex-wrap gap-2">
+                    <span class="rounded-md bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-600">UI/UX</span>
+                    <span class="rounded-md bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-600">Visual design</span>
+                  </span>
+                </span>
+
+                <span class="mt-1 text-lg font-semibold text-slate-300 transition group-hover:text-violet-600">→</span>
+              </a>
+
+              <!-- Internships -->
+              <a href="/jobs?type=Internship" class="group flex items-start gap-3 rounded-2xl border border-slate-200 bg-white p-4 transition hover:border-amber-200 hover:bg-amber-50/40 hover:shadow-md">
+                <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-amber-50 text-amber-700 transition group-hover:bg-amber-500 group-hover:text-white">
+                  <svg aria-hidden="true" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <rect x="3" y="7" width="18" height="14" rx="2"/>
+                    <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18"/>
+                  </svg>
+                </span>
+
+                <span class="min-w-0 flex-1">
+                  <span class="block wrap-break-word font-bold text-slate-900 group-hover:text-amber-700">Internships &amp; Early Careers</span>
+                  <span class="mt-1 block text-sm text-slate-500">Learn, contribute and build experience.</span>
+                  <span class="mt-3 flex flex-wrap gap-2">
+                    <span class="rounded-md bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-600">Entry-level</span>
+                    <span class="rounded-md bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-600">Internships</span>
+                  </span>
+                </span>
+
+                <span class="mt-1 text-lg font-semibold text-slate-300 transition group-hover:text-amber-600">→</span>
+              </a>
+            </div>
+
+            <!-- Discover footer -->
+            <div class="mt-5 flex flex-col gap-3 rounded-2xl bg-slate-950 p-4 text-white sm:flex-row sm:items-center sm:justify-between sm:p-5">
+              <div>
+                <p class="text-sm font-bold">Your next chapter is closer than you think.</p>
+                <p class="mt-1 text-xs leading-5 text-slate-300">Browse opportunities on JobNest.</p>
+              </div>
+
+              <a href="/jobs" class="inline-flex min-h-10 shrink-0 items-center justify-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-extrabold text-slate-900 transition hover:bg-indigo-50">
+                Browse jobs <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Small floating label -->
+          <div class="absolute -bottom-5 -left-3 hidden items-center gap-3 rounded-2xl border border-slate-100 bg-white px-4 py-3 shadow-xl sm:flex lg:-left-8">
+            <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50 text-lg text-emerald-600">✓</span>
+            <span>
+              <span class="block text-xs text-slate-500">The next step</span>
+              <span class="mt-0.5 block text-sm font-extrabold text-slate-900">Starts with discovery</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Homepage search -->
+      <div class="mx-auto max-w-7xl px-5 pb-12 sm:px-8 sm:pb-16">
+        <form action="/jobs" method="GET" class="rounded-2xl border border-slate-200 bg-white p-4 shadow-xl shadow-indigo-950/5 sm:p-5">
+
+          <div class="mb-4">
+            <p class="text-sm font-bold text-slate-900">Find your next opportunity</p>
+            <p class="mt-1 text-xs text-slate-500">Start with your preferred field, job type and location.</p>
+          </div>
+
+          <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_auto]">
+
+            <div>
+              <label for="home-category" class="mb-2 block text-sm font-semibold text-slate-700">Job category</label>
+              <select id="home-category" name="category" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100">
+                <option value="">All categories</option>
+                <option value="development">Development</option>
+                <option value="design">Design &amp; Creative</option>
+                <option value="marketing">Marketing</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="home-type" class="mb-2 block text-sm font-semibold text-slate-700">Job type</label>
+              <select id="home-type" name="type" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100">
+                <option value="">All job types</option>
+                <option value="Full-time">Full-time</option>
+                <option value="Part-time">Part-time</option>
+                <option value="Internship">Internship</option>
+                <option value="Contract">Contract</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="home-location" class="mb-2 block text-sm font-semibold text-slate-700">Location</label>
+              <input id="home-location" name="location" type="text" placeholder="Jaipur, Delhi, Remote" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100">
+            </div>
+
+            <div class="flex items-end">
+              <button type="submit" class="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-700">
+                Search jobs <span aria-hidden="true">→</span>
+              </button>
+            </div>
+
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- Categories -->
+    <section id="categories" class="mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-20 lg:py-24">
+
+      <div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-widest text-indigo-600">Explore by interest</p>
+          <h2 class="mt-3 text-3xl font-extrabold tracking-tight text-slate-950 sm:text-4xl">Find your direction.</h2>
+          <p class="mt-4 max-w-xl text-base leading-7 text-slate-600">Discover roles that match your strengths, interests and ambitions.</p>
+        </div>
+
+        <a href="/jobs" class="inline-flex items-center gap-2 text-sm font-bold text-indigo-600 transition hover:text-indigo-800">
+          Explore all jobs <span aria-hidden="true">→</span>
+        </a>
+      </div>
+
+      <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+
+        <a href="/jobs?category=development" class="group rounded-2xl border border-slate-200 bg-white p-6 transition hover:-translate-y-1 hover:border-indigo-200 hover:shadow-xl">
+          <div class="flex size-12 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-700 transition group-hover:bg-indigo-600 group-hover:text-white">
+            <svg aria-hidden="true" class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 5l-4 14"/>
+            </svg>
+          </div>
+          <h3 class="mt-5 text-base font-bold text-slate-950">Development</h3>
+          <p class="mt-2 text-sm leading-6 text-slate-500">Software, web development and engineering roles.</p>
+          <span class="mt-5 inline-flex items-center gap-2 text-sm font-bold text-indigo-600">Explore roles →</span>
+        </a>
+
+        <a href="/jobs?category=design" class="group rounded-2xl border border-slate-200 bg-white p-6 transition hover:-translate-y-1 hover:border-violet-200 hover:shadow-xl">
+          <div class="flex size-12 items-center justify-center rounded-2xl bg-violet-50 text-violet-700 transition group-hover:bg-violet-600 group-hover:text-white">
+            <svg aria-hidden="true" class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="m12 3 9 5-9 5-9-5 9-5Z"/>
+              <path d="m3 12 9 5 9-5M3 16l9 5 9-5"/>
+            </svg>
+          </div>
+          <h3 class="mt-5 text-base font-bold text-slate-950">Design &amp; Creative</h3>
+          <p class="mt-2 text-sm leading-6 text-slate-500">UI/UX, graphics and creative opportunities.</p>
+          <span class="mt-5 inline-flex items-center gap-2 text-sm font-bold text-indigo-600">Explore roles →</span>
+        </a>
+
+        <a href="/jobs?category=marketing" class="group rounded-2xl border border-slate-200 bg-white p-6 transition hover:-translate-y-1 hover:border-emerald-200 hover:shadow-xl">
+          <div class="flex size-12 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-700 transition group-hover:bg-emerald-600 group-hover:text-white">
+            <svg aria-hidden="true" class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M3 11v2a2 2 0 0 0 2 2h2l4 4V5l-4 4H5a2 2 0 0 0-2 2Z"/>
+              <path d="M15 9a4 4 0 0 1 0 6M17 5a9 9 0 0 1 0 14"/>
+            </svg>
+          </div>
+          <h3 class="mt-5 text-base font-bold text-slate-950">Marketing</h3>
+          <p class="mt-2 text-sm leading-6 text-slate-500">Digital marketing, content and growth roles.</p>
+          <span class="mt-5 inline-flex items-center gap-2 text-sm font-bold text-indigo-600">Explore roles →</span>
+        </a>
+
+        <a href="/jobs?type=Internship" class="group rounded-2xl border border-slate-200 bg-white p-6 transition hover:-translate-y-1 hover:border-amber-200 hover:shadow-xl">
+          <div class="flex size-12 items-center justify-center rounded-2xl bg-amber-50 text-amber-700 transition group-hover:bg-amber-500 group-hover:text-white">
+            <svg aria-hidden="true" class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <rect x="3" y="7" width="18" height="14" rx="2"/>
+              <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18M10 12v2h4v-2"/>
+            </svg>
+          </div>
+          <h3 class="mt-5 text-base font-bold text-slate-950">Internships</h3>
+          <p class="mt-2 text-sm leading-6 text-slate-500">Build experience, learn new skills and grow.</p>
+          <span class="mt-5 inline-flex items-center gap-2 text-sm font-bold text-indigo-600">Explore roles →</span>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- Latest opportunities -->
+    <section id="opportunities" class="border-y border-slate-200 bg-slate-50">
+      <div class="mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-20 lg:py-24">
+
+        <div class="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-widest text-indigo-600">Fresh opportunities</p>
+            <h2 class="mt-3 text-3xl font-extrabold tracking-tight text-slate-950 sm:text-4xl">Your next move starts here.</h2>
+            <p class="mt-4 max-w-xl text-base leading-7 text-slate-600">Explore the latest active jobs and internships posted on JobNest.</p>
+          </div>
+
+          <a href="/jobs" class="inline-flex items-center gap-2 text-sm font-bold text-indigo-600 transition hover:text-indigo-800">
+            View all jobs →
+          </a>
+        </div>
+
+        <div class="mt-7 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-600">
+          <span class="size-2 rounded-full bg-emerald-500"></span>
+          <%= jobs.length %> recent <%= jobs.length === 1 ? "opportunity" : "opportunities" %>
+        </div>
+
+        <% if (jobs.length > 0) { %>
+
+          <div class="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+
+            <% jobs.forEach(job => { %>
+              <article class="group flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-6 transition hover:-translate-y-1 hover:border-indigo-200 hover:shadow-xl">
+
+                <div class="flex items-start gap-4">
+                  <div class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-indigo-50 text-lg font-extrabold text-indigo-700">
+                    <%= (job.companyName || "J").trim().charAt(0).toUpperCase() %>
+                  </div>
+
+                  <div class="min-w-0 flex-1">
+                    <h3 class="wrap-break-word text-lg font-bold leading-6 text-slate-950 transition group-hover:text-indigo-700">
+                      <%= job.title %>
+                    </h3>
+                    <p class="mt-1.5 text-sm font-medium text-slate-500"><%= job.companyName %></p>
+                  </div>
+                </div>
+
+                <div class="mt-5 flex flex-wrap gap-2">
+                  <span class="rounded-lg bg-indigo-50 px-3 py-1.5 text-xs font-semibold text-indigo-700"><%= job.jobType %></span>
+                  <span class="rounded-lg bg-slate-100 px-3 py-1.5 text-xs font-medium text-slate-600"><%= job.workMode || "Work mode not specified" %></span>
+                </div>
+
+                <div class="mt-5 space-y-3 text-sm text-slate-600">
+                  <p class="flex items-start gap-2">
+                    <span aria-hidden="true">📍</span>
+                    <span><%= job.location || "Location not specified" %></span>
+                  </p>
+
+                  <p class="flex items-start gap-2">
+                    <span aria-hidden="true">🎯</span>
+                    <span><%= job.experienceLevel || "Experience not specified" %></span>
+                  </p>
+                </div>
+
+                <% if (job.skills && job.skills.length > 0) { %>
+                  <div class="mt-5 flex flex-wrap gap-2">
+                    <% job.skills.slice(0, 3).forEach(skill => { %>
+                      <span class="rounded-md border border-slate-200 px-2.5 py-1 text-xs font-medium text-slate-600"><%= skill %></span>
+                    <% }) %>
+
+                    <% if (job.skills.length > 3) { %>
+                      <span class="rounded-md bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-500">+<%= job.skills.length - 3 %></span>
+                    <% } %>
+                  </div>
+                <% } %>
+
+                <div class="mt-auto">
+                  <div class="mt-6 border-t border-slate-100 pt-5">
+                    <p class="text-xs font-medium uppercase tracking-wider text-slate-500">Salary</p>
+                    <p class="mt-1.5 text-lg font-extrabold text-slate-950"><%= job.salary || "Not disclosed" %></p>
+                  </div>
+
+                  <div class="mt-5 flex items-center justify-between gap-3">
+                    <p class="text-xs text-slate-400">
+                      Posted <%= new Date(job.createdAt).toLocaleDateString("en-IN") %>
+                    </p>
+
+                    <a href="/jobs/<%= job._id %>" class="inline-flex shrink-0 items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-indigo-700">
+                      View details →
+                    </a>
+                  </div>
+                </div>
+
+              </article>
+            <% }) %>
+
+          </div>
+
+        <% } else { %>
+
+          <div class="mt-8 rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-14 text-center">
+            <div class="mx-auto flex size-14 items-center justify-center rounded-2xl bg-indigo-50 text-2xl text-indigo-600">⌕</div>
+            <h3 class="mt-5 text-xl font-bold text-slate-950">New opportunities are on the way</h3>
+            <p class="mx-auto mt-3 max-w-md text-sm leading-6 text-slate-500">
+              There are no active jobs to show right now. Check back soon or browse the jobs page.
+            </p>
+            <a href="/jobs" class="mt-6 inline-flex items-center justify-center rounded-xl bg-indigo-600 px-5 py-3 text-sm font-bold text-white transition hover:bg-indigo-700">
+              Browse jobs →
+            </a>
+          </div>
+
+        <% } %>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section id="how-it-works" class="mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-20 lg:py-24">
+
+      <div class="mx-auto max-w-2xl text-center">
+        <p class="text-xs font-bold uppercase tracking-widest text-indigo-600">Simple by design</p>
+        <h2 class="mt-3 text-3xl font-extrabold tracking-tight text-slate-950 sm:text-4xl">Three steps. New possibilities.</h2>
+        <p class="mt-4 leading-7 text-slate-600">A simple path from discovering opportunities to taking the next step.</p>
+      </div>
+
+      <div class="mt-12 grid gap-5 md:grid-cols-3">
+
+        <article class="rounded-2xl border border-slate-200 bg-white p-7 transition hover:border-indigo-200 hover:shadow-lg">
+          <span class="flex size-11 items-center justify-center rounded-xl bg-indigo-50 text-sm font-extrabold text-indigo-700">01</span>
+          <h3 class="mt-5 text-lg font-bold text-slate-950">Create your account</h3>
+          <p class="mt-3 text-sm leading-7 text-slate-600">Set up your account and get ready to explore the opportunities that interest you.</p>
+        </article>
+
+        <article class="rounded-2xl border border-slate-200 bg-white p-7 transition hover:border-indigo-200 hover:shadow-lg">
+          <span class="flex size-11 items-center justify-center rounded-xl bg-indigo-50 text-sm font-extrabold text-indigo-700">02</span>
+          <h3 class="mt-5 text-lg font-bold text-slate-950">Discover your fit</h3>
+          <p class="mt-3 text-sm leading-7 text-slate-600">Explore jobs by category, work mode, location and job type.</p>
+        </article>
+
+        <article class="rounded-2xl border border-slate-200 bg-white p-7 transition hover:border-indigo-200 hover:shadow-lg">
+          <span class="flex size-11 items-center justify-center rounded-xl bg-indigo-50 text-sm font-extrabold text-indigo-700">03</span>
+          <h3 class="mt-5 text-lg font-bold text-slate-950">Apply and grow</h3>
+          <p class="mt-3 text-sm leading-7 text-slate-600">Take the next step in your career by applying for roles that match your goals.</p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="px-5 pb-16 sm:px-8 sm:pb-24">
+      <div class="relative mx-auto max-w-7xl overflow-hidden rounded-3xl bg-indigo-700 px-6 py-12 text-center text-white sm:px-12 sm:py-16">
+
+        <div class="pointer-events-none absolute -right-20 -top-24 size-72 rounded-full bg-violet-400/30 blur-3xl"></div>
+        <div class="pointer-events-none absolute -bottom-28 -left-20 size-72 rounded-full bg-blue-400/20 blur-3xl"></div>
+
+        <div class="relative">
+          <p class="text-xs font-bold uppercase tracking-widest text-indigo-200">Your next chapter awaits</p>
+          <h2 class="mx-auto mt-4 max-w-3xl text-3xl font-extrabold tracking-tight sm:text-4xl">Make your next move count.</h2>
+          <p class="mx-auto mt-4 max-w-xl text-sm leading-7 text-indigo-100 sm:text-base">
+            Discover opportunities, build experience and take your career forward with JobNest.
+          </p>
+
+          <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+            <a href="/jobs" class="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-bold text-indigo-700 transition hover:bg-indigo-50">
+              Explore jobs →
+            </a>
+
+            <% if (!currentUser) { %>
+              <a href="/signup" class="inline-flex items-center justify-center rounded-xl border border-indigo-300/60 px-6 py-3.5 text-sm font-bold text-white transition hover:bg-indigo-600">
+                Join JobNest
+              </a>
+            <% } %>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <%- include("partials/footer") %>
+
+</body>
+</html>

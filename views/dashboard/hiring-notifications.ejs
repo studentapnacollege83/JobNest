@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hiring Notifications | JobNest</title>
+  <link rel="stylesheet" href="/output.css">
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100">
+
+  <%- include("../partials/navbar") %>
+
+  <main class="mx-auto max-w-5xl px-4 py-10 sm:px-6">
+    <a href="/job-seeker/dashboard"
+       class="text-sm font-semibold text-indigo-400 hover:text-indigo-300">
+      ← Back to Dashboard
+    </a>
+
+    <section class="mt-6 rounded-3xl border border-slate-800 bg-slate-900 p-6 sm:p-8">
+      <div class="flex items-center gap-4">
+        <div class="flex size-14 items-center justify-center rounded-2xl bg-indigo-500/15 text-3xl">
+          🔔
+        </div>
+        <div>
+          <h1 class="text-2xl font-extrabold sm:text-3xl">Hiring Notifications</h1>
+          <p class="mt-1 text-sm text-slate-400">
+            Your hiring updates and joining instructions.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <% if (!applications.length) { %>
+      <section class="mt-6 rounded-2xl border border-slate-800 bg-slate-900 px-6 py-14 text-center">
+        <div class="text-4xl">📭</div>
+        <h2 class="mt-4 text-xl font-bold">No hiring notifications yet</h2>
+        <p class="mt-2 text-sm text-slate-400">
+          When an employer hires you, your joining details will appear here.
+        </p>
+        <a href="/jobs"
+           class="mt-6 inline-flex rounded-xl bg-indigo-600 px-5 py-3 font-bold text-white hover:bg-indigo-500">
+          Explore Jobs
+        </a>
+      </section>
+    <% } else { %>
+
+      <div class="mt-6 space-y-6">
+        <% applications.forEach((application) => { %>
+          <article class="overflow-hidden rounded-2xl border border-emerald-500/20 bg-slate-900 shadow-lg">
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 bg-emerald-500/5 px-5 py-4 sm:px-6">
+              <div>
+                <p class="text-xs font-bold uppercase tracking-widest text-emerald-400">
+                  ✓ You've been hired
+                </p>
+                <h2 class="mt-2 text-xl font-bold">
+                  <%= application.job?.title || "Job position" %>
+                </h2>
+                <p class="mt-1 text-sm text-slate-400">
+                  <%= application.job?.companyName || "Company" %>
+                </p>
+              </div>
+              <span class="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-sm font-bold text-emerald-300">
+                Hired
+              </span>
+            </div>
+
+            <div class="p-5 sm:p-6">
+              <p class="text-sm leading-6 text-slate-400">
+                Congratulations! Please review your joining details below.
+              </p>
+
+              <div class="mt-5 grid gap-4 sm:grid-cols-2">
+                <div class="rounded-xl border border-slate-800 bg-slate-950 p-4">
+                  <p class="text-xs font-semibold text-slate-400">Joining Date</p>
+                  <p class="mt-2 font-bold">
+                    <%= application.hiringDetails?.joiningDate
+                      ? new Date(application.hiringDetails.joiningDate).toLocaleDateString("en-IN", { day: "2-digit", month: "long", year: "numeric", timeZone: "UTC" })
+                      : "Not provided" %>
+                  </p>
+                </div>
+
+                <div class="rounded-xl border border-slate-800 bg-slate-950 p-4">
+                  <p class="text-xs font-semibold text-slate-400">Reporting Time</p>
+                  <p class="mt-2 font-bold">
+                    <%= application.hiringDetails?.reportingTime || "Not provided" %>
+                  </p>
+                </div>
+
+                <div class="rounded-xl border border-slate-800 bg-slate-950 p-4 sm:col-span-2">
+                  <p class="text-xs font-semibold text-slate-400">Joining Location / Office Address</p>
+                  <p class="mt-2 whitespace-pre-wrap font-medium"><%= application.hiringDetails?.joiningLocation || "Not provided" %></p>
+                </div>
+
+                <div class="rounded-xl border border-slate-800 bg-slate-950 p-4">
+                  <p class="text-xs font-semibold text-slate-400">Salary / Package</p>
+                  <p class="mt-2 font-bold"><%= application.hiringDetails?.salary || "Not provided" %></p>
+                </div>
+
+                <div class="rounded-xl border border-slate-800 bg-slate-950 p-4">
+                  <p class="text-xs font-semibold text-slate-400">HR / Contact Person</p>
+                  <p class="mt-2 whitespace-pre-wrap font-medium"><%= application.hiringDetails?.contactPerson || "Not provided" %></p>
+                </div>
+
+                <div class="rounded-xl border border-slate-800 bg-slate-950 p-4 sm:col-span-2">
+                  <p class="text-xs font-semibold text-slate-400">Additional Instructions</p>
+                  <p class="mt-2 whitespace-pre-wrap font-medium"><%= application.hiringDetails?.instructions || "No additional instructions." %></p>
+                </div>
+              </div>
+            </div>
+          </article>
+        <% }) %>
+      </div>
+
+    <% } %>
+  </main>
+
+  <%- include("../partials/footer") %>
+
+</body>
+</html>

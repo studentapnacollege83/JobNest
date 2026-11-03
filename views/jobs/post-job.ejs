@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post a Job | JobNest</title>
+  <link rel="stylesheet" href="/output.css">
+</head>
+
+<body class="min-h-screen bg-white text-slate-900 antialiased">
+<%- include("../partials/navbar") %>
+
+<main class="min-h-screen bg-slate-50 px-5 py-12">
+  <div class="mx-auto max-w-3xl">
+
+    <a href="/employer/dashboard"
+       class="text-sm font-semibold text-indigo-600 hover:text-indigo-800">
+      ← Back to Dashboard
+    </a>
+
+    <div class="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-9">
+      <h1 class="text-3xl font-bold tracking-tight text-slate-900">
+        Post a Job
+      </h1>
+      <p class="mt-2 text-slate-500">
+        Find the right talent for your company.
+      </p>
+
+      <form action="/employer/jobs" method="POST"
+            class="mt-8 space-y-5">
+
+        <div>
+          <label class="mb-2 block text-sm font-semibold">Job Title</label>
+          <input name="title" required maxlength="120"
+            placeholder="e.g. Full Stack Developer"
+            class="w-full rounded-lg border border-slate-300 px-4 py-3 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100">
+        </div>
+
+        <div>
+          <label class="mb-2 block text-sm font-semibold">Company Name</label>
+          <input name="companyName" required
+            placeholder="Your company name"
+            class="w-full rounded-lg border border-slate-300 px-4 py-3 outline-none focus:border-indigo-500">
+        </div>
+
+        <div>
+          <label class="mb-2 block text-sm font-semibold">Location</label>
+          <input name="location" required
+            placeholder="e.g. Jaipur, Rajasthan"
+            class="w-full rounded-lg border border-slate-300 px-4 py-3 outline-none focus:border-indigo-500">
+        </div>
+
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label class="mb-2 block text-sm font-semibold">Job Type</label>
+            <select name="jobType" required
+              class="w-full rounded-lg border border-slate-300 bg-white px-4 py-3">
+              <option value="">Select type</option>
+              <option>Full-time</option>
+              <option>Part-time</option>
+              <option>Internship</option>
+              <option>Contract</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="mb-2 block text-sm font-semibold">Work Mode</label>
+            <select name="workMode" required
+              class="w-full rounded-lg border border-slate-300 bg-white px-4 py-3">
+              <option value="">Select mode</option>
+              <option>On-site</option>
+              <option>Remote</option>
+              <option>Hybrid</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="mb-2 block text-sm font-semibold">Experience Level</label>
+            <select name="experienceLevel" required
+              class="w-full rounded-lg border border-slate-300 bg-white px-4 py-3">
+              <option value="">Select level</option>
+              <option>Fresher</option>
+              <option>Entry-level</option>
+              <option>Experienced</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="mb-2 block text-sm font-semibold">Salary</label>
+            <input name="salary" placeholder="e.g. ₹3–5 LPA"
+              class="w-full rounded-lg border border-slate-300 px-4 py-3">
+          </div>
+        </div>
+
+        <div>
+          <label class="mb-2 block text-sm font-semibold">Required Skills</label>
+          <input name="skills" placeholder="JavaScript, Node.js, MongoDB"
+            class="w-full rounded-lg border border-slate-300 px-4 py-3">
+          <p class="mt-1 text-xs text-slate-500">Separate skills with commas.</p>
+        </div>
+
+        <div>
+          <label class="mb-2 block text-sm font-semibold">Job Description</label>
+          <textarea name="description" required rows="5"
+            placeholder="Describe the role and responsibilities..."
+            class="w-full rounded-lg border border-slate-300 px-4 py-3"></textarea>
+        </div>
+
+        <div>
+          <label class="mb-2 block text-sm font-semibold">Requirements</label>
+          <textarea name="requirements" rows="4"
+            placeholder="Qualifications and other requirements..."
+            class="w-full rounded-lg border border-slate-300 px-4 py-3"></textarea>
+        </div>
+
+        <button type="submit"
+          class="w-full rounded-lg bg-indigo-600 px-5 py-3 font-semibold text-white transition hover:bg-indigo-700 sm:w-auto">
+          Publish Job →
+        </button>
+
+      </form>
+    </div>
+  </div>
+</main>
+
+<%- include("../partials/footer") %>
+
+</body>
+</html>

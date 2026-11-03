@@ -1,0 +1,118 @@
+
+<!-- Navbar -->
+<header class="sticky top-0 z-50 border-b border-slate-200/70 bg-white/90 backdrop-blur-xl">
+  <nav class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3.5 sm:px-6 lg:px-8">
+
+    <!-- Logo -->
+    <a href="/" class="group flex shrink-0 items-center gap-2.5">
+      <span class="flex size-11 items-center justify-center rounded-2xl bg-linear-to-br from-indigo-600 to-violet-600 text-xl font-black text-white shadow-lg shadow-indigo-200 transition duration-300 group-hover:-rotate-6 group-hover:scale-105">
+        J
+      </span>
+      <span class="text-xl font-extrabold tracking-tight text-slate-900 sm:text-2xl">
+        JobNest<span class="text-indigo-600">.</span>
+      </span>
+    </a>
+
+    <!-- Navigation links -->
+    <div class="hidden items-center gap-7 lg:flex">
+      <a href="/jobs" class="text-sm font-semibold text-slate-600 transition hover:text-indigo-600">
+        Find Jobs
+      </a>
+      <a href="/#categories" class="text-sm font-semibold text-slate-600 transition hover:text-indigo-600">
+        Categories
+      </a>
+      <a href="/#how-it-works" class="text-sm font-semibold text-slate-600 transition hover:text-indigo-600">
+        How It Works
+      </a>
+    </div>
+
+    <!-- User actions -->
+    <div class="flex shrink-0 items-center gap-2 sm:gap-3">
+      <% if (currentUser) { %>
+
+        <% if (currentUser.role === "employer") { %>
+          <a
+            href="/employer/dashboard"
+            class="rounded-xl bg-indigo-50 px-3 py-2.5 text-sm font-bold text-indigo-700 transition hover:bg-indigo-100 sm:px-4"
+          >
+            Dashboard
+          </a>
+        <% } else if (currentUser.role === "jobSeeker") { %>
+  <div class="flex items-center gap-2">
+    <a
+      href="/job-seeker/dashboard"
+      class="rounded-xl border border-slate-700 bg-slate-800 px-3 py-2.5 text-sm font-bold text-slate-100 transition hover:bg-slate-700 sm:px-4"
+    >
+      Dashboard
+    </a>
+
+    <a
+      href="/job-seeker/notifications"
+      aria-label="Hiring notifications"
+      class="relative flex size-11 items-center justify-center rounded-xl border border-slate-700 bg-slate-800 text-slate-100 transition hover:border-indigo-500 hover:bg-slate-700"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="size-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="1.8"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9a6 6 0 0 0-12 0v.75a8.967 8.967 0 0 1-2.311 6.022 23.848 23.848 0 0 0 5.454 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"
+        />
+      </svg>
+
+      <% if (typeof unreadHiringNotifications !== "undefined" && unreadHiringNotifications > 0) { %>
+        <span
+          class="absolute -right-1 -top-1 flex min-w-5 items-center justify-center rounded-full bg-rose-500 px-1 text-xs font-extrabold leading-5 text-white ring-2 ring-slate-950"
+        >
+          <%= unreadHiringNotifications > 99 ? "99+" : unreadHiringNotifications %>
+        </span>
+      <% } %>
+    </a>
+  </div>
+<% } %>
+
+        <div class="hidden border-l border-slate-200 pl-3 text-right md:block">
+          <p class="max-w-36 truncate text-sm font-bold text-slate-800">
+            Hi, <%= currentUser.fullName %>
+          </p>
+          <p class="mt-0.5 text-xs font-medium text-slate-500">
+            <%= currentUser.role === "employer" ? "Employer" : "Job Seeker" %>
+          </p>
+        </div>
+
+        <form action="/logout" method="POST">
+          <button
+            type="submit"
+            class="rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm font-bold text-slate-700 transition hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 sm:px-4"
+          >
+            Logout
+          </button>
+        </form>
+
+      <% } else { %>
+
+        <a
+          href="/login"
+          class="rounded-xl px-3 py-2.5 text-sm font-bold text-slate-700 transition hover:bg-slate-100 hover:text-indigo-600 sm:px-4"
+        >
+          Login
+        </a>
+
+        <a
+          href="/signup"
+          class="rounded-xl bg-linear-to-r from-indigo-600 to-violet-600 px-3.5 py-2.5 text-sm font-bold text-white shadow-md shadow-indigo-200 transition hover:-translate-y-0.5 hover:shadow-lg sm:px-5"
+        >
+          Get Started
+        </a>
+
+      <% } %>
+    </div>
+
+  </nav>
+</header>

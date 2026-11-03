@@ -1,0 +1,22 @@
+
+# Dependencies
+node_modules/
+
+# Environment secrets
+.env
+.env.*
+!.env.example
+
+# User-uploaded files and private resumes
+uploads/
+private-resumes/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+
+# Local environment files
+.DS_Store
+Thumbs.db
