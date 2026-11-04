@@ -1,5 +1,5 @@
 
-const Job = require("../models/Job");
+const Job = require("../models/job");
 
 exports.getHome = async (req, res) => {
   try {

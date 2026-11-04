@@ -1,5 +1,5 @@
 const fs = require("fs/promises");
-const Job = require("../models/Job");
+const Job = require("../models/job");
 const path = require("path");
 const Application = require("../models/Application");
 const User = require("../models/User");
@@ -518,8 +518,7 @@ if (search) {
 
     // Category and location filters must both match
     if (conditions.length > 0) {
-      filter.$and = conditions;
-    } 
+      filter.$and = conditions;} 
 const page = Math.max(1, parseInt(req.query.page, 10) || 1);
 const limit = 6;
 
