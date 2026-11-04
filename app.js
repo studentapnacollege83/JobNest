@@ -24,6 +24,73 @@ const PORT = process.env.PORT || 3000;
 const SESSION_SECRET = process.env.SESSION_SECRET;
 const rawMongoUri = process.env.MONGODB_URI;
 
+function getMongoUriDiagnostics(uri) {
+  const isString = typeof uri === "string";
+  const normalizedUri = isString ? uri.trim() : "";
+  let scheme = "missing";
+
+  if (normalizedUri !== "") {
+    if (/^mongodb\+srv:\/\//.test(normalizedUri)) {
+      scheme = "mongodb+srv://";
+    } else if (/^mongodb:\/\//.test(normalizedUri)) {
+      scheme = "mongodb://";
+    } else {
+      scheme = "invalid";
+    }
+  }
+
+  return {
+    normalizedUri,
+    diagnostics: {
+      present: normalizedUri !== "",
+      scheme,
+      hasSurroundingWhitespace: isString && uri !== normalizedUri,
+      hasUnexpectedQuotes:
+        normalizedUri.startsWith('"') ||
+        normalizedUri.endsWith('"') ||
+        normalizedUri.startsWith("'") ||
+        normalizedUri.endsWith("'"),
+    },
+  };
+}
+
+function getSafeMongoErrorDetails(error) {
+  const driverError = error?.cause instanceof Error ? error.cause : error;
+  const message = [error?.message, driverError?.message]
+    .filter((value) => typeof value === "string")
+    .join(" ");
+  let sanitizedMessage = "MongoDB connection failed for an unclassified reason.";
+
+  if (/\b(ENOTFOUND|ENODATA|EAI_AGAIN|querySrv|getaddrinfo)\b/i.test(message)) {
+    sanitizedMessage = "DNS or SRV record resolution failed.";
+  } else if (/(tls|ssl|certificate|CERT_)/i.test(message)) {
+    sanitizedMessage = "TLS handshake or certificate validation failed.";
+  } else if (/\b(authentication|auth failed|bad auth)\b/i.test(message)) {
+    sanitizedMessage = "MongoDB authentication failed.";
+  } else if (/\b(ECONNREFUSED|ECONNRESET|ETIMEDOUT|server selection timed out)\b/i.test(message)) {
+    sanitizedMessage = "MongoDB network connection failed or timed out.";
+  } else if (/\b(invalid scheme|connection string|MongoParseError)\b/i.test(message)) {
+    sanitizedMessage = "MongoDB connection string parsing failed.";
+  }
+
+  return {
+    name:
+      typeof driverError?.name === "string" ? driverError.name : "UnknownError",
+    code:
+      typeof driverError?.code === "string" ||
+      typeof driverError?.code === "number"
+        ? driverError.code
+        : null,
+    codeName:
+      typeof driverError?.codeName === "string" ? driverError.codeName : null,
+    message: sanitizedMessage,
+  };
+}
+
+function logMongoConnectionError(source, error) {
+  console.error(`${source} MongoDB error:`, getSafeMongoErrorDetails(error));
+}
+
 function configurationError(message) {
   console.error(`Configuration error: ${message}`);
   process.exit(1);
@@ -31,13 +98,16 @@ function configurationError(message) {
 
 // Validate configuration before either database client is initialized. This avoids
 // leaking connection strings and makes deployment errors actionable.
-if (typeof rawMongoUri !== "string" || rawMongoUri.trim() === "") {
+const { normalizedUri: MONGODB_URI, diagnostics: mongoUriDiagnostics } =
+  getMongoUriDiagnostics(rawMongoUri);
+
+console.info("MongoDB URI diagnostics:", mongoUriDiagnostics);
+
+if (!mongoUriDiagnostics.present) {
   configurationError("MONGODB_URI is required.");
 }
 
-const MONGODB_URI = rawMongoUri.trim();
-
-if (!/^mongodb(?:\+srv)?:\/\//i.test(MONGODB_URI)) {
+if (mongoUriDiagnostics.scheme === "invalid") {
   configurationError(
     "MONGODB_URI must start with mongodb:// or mongodb+srv://. Check the Render environment variable name and value; do not include placeholder text or enclosing quotes."
   );
@@ -70,15 +140,14 @@ try {
     collection: "sessions",
   });
 } catch (error) {
+  logMongoConnectionError("Session store initialization", error);
   configurationError(
     "MONGODB_URI could not be used to initialize the session store. Verify that it is a valid MongoDB connection string."
   );
 }
 
-store.on("error", () => {
-  console.error(
-    "Session store error: MongoDB session storage is unavailable. Check MongoDB connectivity and configuration."
-  );
+store.on("error", (error) => {
+  logMongoConnectionError("Session store", error);
 });
 
 // Session Middleware
@@ -183,9 +252,7 @@ mongoose
       console.error("Server startup error:", error.message);
     });
   })
-  .catch(() => {
-    console.error(
-      "MongoDB connection failed. Check Atlas network access and the MONGODB_URI configuration."
-    );
+  .catch((error) => {
+    logMongoConnectionError("Mongoose", error);
     process.exitCode = 1;
   });
