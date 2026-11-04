@@ -1,6 +1,6 @@
 const Job = require("../models/job");
 const Application = require("../models/Application");
-const User = require("../models/User");
+const User = require("../models/user");
 exports.getDashboard = (req, res) => {
   if (req.session.user.role === "employer") {
     return res.redirect("/employer/dashboard");

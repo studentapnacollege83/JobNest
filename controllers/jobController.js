@@ -2,7 +2,7 @@ const fs = require("fs/promises");
 const Job = require("../models/job");
 const path = require("path");
 const Application = require("../models/Application");
-const User = require("../models/User");
+const User = require("../models/user");
 const { saveResume, uploadDirectory } = require("../middleware/resumeUpload");
 
 exports.getEditJob = async (req, res) => {
