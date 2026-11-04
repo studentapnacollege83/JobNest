@@ -21,14 +21,30 @@ const jobRouter = require("./routes/jobRouter");
 const app = express();
 
 const PORT = process.env.PORT || 3000;
-const DB_PATH = process.env.MONGODB_URI;
 const SESSION_SECRET = process.env.SESSION_SECRET;
+const rawMongoUri = process.env.MONGODB_URI;
 
-// Validate environment variables
-if (!DB_PATH || !SESSION_SECRET) {
-  throw new Error(
-    "MONGODB_URI and SESSION_SECRET must be set in .env"
+function configurationError(message) {
+  console.error(`Configuration error: ${message}`);
+  process.exit(1);
+}
+
+// Validate configuration before either database client is initialized. This avoids
+// leaking connection strings and makes deployment errors actionable.
+if (typeof rawMongoUri !== "string" || rawMongoUri.trim() === "") {
+  configurationError("MONGODB_URI is required.");
+}
+
+const MONGODB_URI = rawMongoUri.trim();
+
+if (!/^mongodb(?:\+srv)?:\/\//i.test(MONGODB_URI)) {
+  configurationError(
+    "MONGODB_URI must start with mongodb:// or mongodb+srv://. Check the Render environment variable name and value; do not include placeholder text or enclosing quotes."
   );
+}
+
+if (typeof SESSION_SECRET !== "string" || SESSION_SECRET.trim() === "") {
+  configurationError("SESSION_SECRET is required.");
 }
 
 // Trust the hosting proxy in production (HTTPS deployments)
@@ -46,13 +62,23 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
 // MongoDB Session Store
-const store = new MongoDBStore({
-  uri: DB_PATH,
-  collection: "sessions",
-});
+let store;
 
-store.on("error", (error) => {
-  console.error("Session store error:", error.message);
+try {
+  store = new MongoDBStore({
+    uri: MONGODB_URI,
+    collection: "sessions",
+  });
+} catch (error) {
+  configurationError(
+    "MONGODB_URI could not be used to initialize the session store. Verify that it is a valid MongoDB connection string."
+  );
+}
+
+store.on("error", () => {
+  console.error(
+    "Session store error: MongoDB session storage is unavailable. Check MongoDB connectivity and configuration."
+  );
 });
 
 // Session Middleware
@@ -145,7 +171,7 @@ app.use((error, req, res, next) => {
 
 // Connect to MongoDB before starting the server
 mongoose
-  .connect(DB_PATH)
+  .connect(MONGODB_URI)
   .then(() => {
     console.log("Connected to MongoDB successfully.");
 
@@ -157,7 +183,9 @@ mongoose
       console.error("Server startup error:", error.message);
     });
   })
-  .catch((error) => {
-    console.error("MongoDB connection failed:", error.message);
+  .catch(() => {
+    console.error(
+      "MongoDB connection failed. Check Atlas network access and the MONGODB_URI configuration."
+    );
     process.exitCode = 1;
   });

@@ -1,7 +1,7 @@
-@'
-# JobNest — Job & Internship Portal
+# JobNest – Job & Internship Portal
 
-A full-stack job and internship portal built with Node.js, Express, EJS, Tailwind CSS, and MongoDB.
+A full-stack job and internship portal built with Node.js, Express, EJS,
+Tailwind CSS, and MongoDB.
 
 ## Features
 
@@ -15,7 +15,7 @@ A full-stack job and internship portal built with Node.js, Express, EJS, Tailwin
 - Employer dashboard statistics
 - Session-based authentication and branded error pages
 
-## Tech Stack
+## Tech stack
 
 - Node.js and Express
 - EJS
@@ -25,11 +25,54 @@ A full-stack job and internship portal built with Node.js, Express, EJS, Tailwin
 - Multer
 - Resend
 
-## Setup
+## Local setup
 
-1. Install Node.js.
-2. Clone this repository.
-3. Install dependencies:
+1. Install dependencies:
 
    ```bash
    npm install
+   ```
+
+2. Copy `.env.example` to `.env`, then replace its placeholder values. Never
+   commit `.env`.
+
+   ```powershell
+   Copy-Item .env.example .env
+   ```
+
+   Required variables:
+
+   - `MONGODB_URI`: a MongoDB connection string beginning with `mongodb+srv://`
+     or `mongodb://`.
+   - `SESSION_SECRET`: a long, random secret for signing sessions.
+   - `RESEND_API_KEY`: required when email notifications are enabled.
+
+3. Build CSS and start the application:
+
+   ```bash
+   npm run build:css
+   npm start
+   ```
+
+## Deploying to Render
+
+Render dashboard variables are separate from the local `.env` file. In the
+Render service dashboard, open **Environment** and set these exact names:
+
+- `MONGODB_URI`
+- `SESSION_SECRET`
+- `RESEND_API_KEY` (if using email notifications)
+- `NODE_ENV=production`
+
+Do not use placeholder text or surround values with quotes in Render. Do not
+put credentials in this repository.
+
+Use these service settings:
+
+- Build command: `npm install --include=dev && npm run build:css`
+- Start command: `npm start`
+
+In MongoDB Atlas, configure Network Access so the Render service can reach the
+cluster, and create a database user with the permissions required by the app.
+The app validates the URI format at startup; an actual Atlas connection can only
+be verified when the deployed service has network access.
